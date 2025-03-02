@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    tools:context=".MainActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Logo de la App -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/logo_app"
+        android:layout_marginBottom="40dp"/>
+
+    <!-- Botón Clásico -->
+    <Button
+        android:id="@+id/btnClasico"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clásico"
+        android:drawableStart="@drawable/icono_clasico"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Botón Personalizado -->
+    <Button
+        android:id="@+id/btnPersonalizado"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Personalizado"
+        android:drawableStart="@drawable/icono_personalizado"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Botón Clasificatoria -->
+    <Button
+        android:id="@+id/btnClasificatoria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Clasificatoria"
+        android:drawableStart="@drawable/icono_clasificatoria"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Botón Configuraciones -->
+    <Button
+        android:id="@+id/btnConfiguraciones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Configuraciones"
+        android:drawableStart="@drawable/icono_configuraciones"
+        android:padding="10dp"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Botón Salir -->
+    <Button
+        android:id="@+id/btnSalir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Salir"
+        android:padding="10dp"
+        android:backgroundTint="@android:color/holo_red_light"/>
+
+</LinearLayout>

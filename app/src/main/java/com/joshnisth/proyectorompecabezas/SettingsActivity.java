@@ -1,4 +1,4 @@
-package com.example.proyectorompecabezas;
+package com.joshnisth.proyectorompecabezas;
 
 public class SettingsActivity {
 }
