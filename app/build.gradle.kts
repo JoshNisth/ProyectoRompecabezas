@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.proyectorompecabezas"
+    namespace = "com.joshnisth.proyectorompecabezas"
     compileSdk = 35
 
     defaultConfig {
