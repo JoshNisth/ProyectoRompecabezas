@@ -70,8 +70,8 @@ public class ArmarPuzzleActivity extends AppCompatActivity {
 
     // Método para cortar la imagen en 9 partes
     private List<ImageView> cortarImagen(Bitmap bitmap) {
-        int ancho = bitmap.getWidth() / 3;
-        int alto = bitmap.getHeight() / 3;
+        int ancho = 100; // Cada pieza debe medir 100x100 dp
+        int alto = 100;
         List<ImageView> piezas = new ArrayList<>();
         posiciones = new int[3][3];
 
@@ -79,10 +79,9 @@ public class ArmarPuzzleActivity extends AppCompatActivity {
             for (int col = 0; col < 3; col++) {
                 ImageView piezaView = new ImageView(this);
                 piezaView.setLayoutParams(new GridLayout.LayoutParams());
-                piezaView.setPadding(2, 2, 2, 2); // Agregar margen entre piezas
+                piezaView.setPadding(2, 2, 2, 2); // Márgenes entre piezas
 
                 if (fila == 2 && col == 2) {
-                    // Última pieza en blanco
                     piezaView.setBackgroundColor(Color.WHITE);
                     posiciones[fila][col] = -1;
                 } else {
@@ -97,11 +96,9 @@ public class ArmarPuzzleActivity extends AppCompatActivity {
                 piezas.add(piezaView);
             }
         }
-
         return piezas;
     }
 
-    // Mostrar las piezas mezcladas en el GridLayout
     // Mostrar las piezas mezcladas en el GridLayout de manera resoluble
     private void mostrarPiezasMezcladas() {
         gridPuzzle.removeAllViews();

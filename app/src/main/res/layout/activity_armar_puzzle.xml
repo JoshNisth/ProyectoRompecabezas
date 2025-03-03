@@ -17,22 +17,22 @@
         android:text="00:00"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:layout_marginBottom="10dp"/>
 
     <!-- Imagen de referencia -->
     <ImageView
         android:id="@+id/imagenReferencia"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:scaleType="centerCrop"
         android:layout_marginBottom="20dp"/>
 
-    <!-- Tablero del rompecabezas -->
+    <!-- Tablero del rompecabezas con tamaño fijo -->
     <GridLayout
         android:id="@+id/gridPuzzle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:columnCount="3"
         android:rowCount="3"
         android:layout_gravity="center"
@@ -45,5 +45,7 @@
         android:id="@+id/btnResolver"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Resolver Automáticamente"/>
+        android:text="RESOLVER AUTOMÁTICAMENTE"
+        android:backgroundTint="#CE7EE5"
+        android:textColor="@android:color/black"/>
 </LinearLayout>

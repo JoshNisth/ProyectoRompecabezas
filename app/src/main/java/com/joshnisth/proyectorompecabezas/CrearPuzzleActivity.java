@@ -3,6 +3,7 @@ package com.joshnisth.proyectorompecabezas;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,16 +16,21 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class CrearPuzzleActivity extends AppCompatActivity {
 
     private static final int REQUEST_CAMERA = 1;
     private static final int REQUEST_GALLERY = 2;
+    private static final int ANCHO_IMAGEN = 300;
+    private static final int ALTO_IMAGEN = 300;
 
     private ImageView imagenSeleccionada;
     private EditText etNombrePuzzle;
     private Uri imagenUri; // Almacena la URI de la imagen seleccionada
+    private Bitmap imagenProcesada; // Bitmap de la imagen redimensionada
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,20 +75,46 @@ public class CrearPuzzleActivity extends AppCompatActivity {
             if (requestCode == REQUEST_CAMERA) {
                 // Obtener imagen capturada
                 Bitmap foto = (Bitmap) data.getExtras().get("data");
-                imagenSeleccionada.setImageBitmap(foto);
-                // Guardar temporalmente
-                imagenUri = data.getData();
+                if (foto != null) {
+                    // Redimensionar la imagen capturada
+                    imagenProcesada = redimensionarImagen(foto, ANCHO_IMAGEN, ALTO_IMAGEN);
+                    imagenSeleccionada.setImageBitmap(imagenProcesada);
+
+                    // Guardar la imagen redimensionada como un archivo temporal
+                    imagenUri = guardarImagenTemporal(imagenProcesada);
+                }
             } else if (requestCode == REQUEST_GALLERY) {
                 // Obtener imagen de la galería
                 imagenUri = data.getData();
                 try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imagenUri);
-                    imagenSeleccionada.setImageBitmap(bitmap);
+                    InputStream imageStream = getContentResolver().openInputStream(imagenUri);
+                    Bitmap bitmapOriginal = BitmapFactory.decodeStream(imageStream);
+
+                    // Redimensionar la imagen seleccionada
+                    imagenProcesada = redimensionarImagen(bitmapOriginal, ANCHO_IMAGEN, ALTO_IMAGEN);
+                    imagenSeleccionada.setImageBitmap(imagenProcesada);
+
+                    // Guardar la imagen redimensionada como un archivo temporal
+                    imagenUri = guardarImagenTemporal(imagenProcesada);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
+    }
+
+    // Método para redimensionar la imagen
+    private Bitmap redimensionarImagen(Bitmap bitmap, int nuevoAncho, int nuevoAlto) {
+        return Bitmap.createScaledBitmap(bitmap, nuevoAncho, nuevoAlto, true);
+    }
+
+    // Método para guardar la imagen redimensionada en un archivo temporal y obtener su URI
+    private Uri guardarImagenTemporal(Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "imagen_puzzle", null);
+        return Uri.parse(path);
     }
 
     // Método para confirmar y pasar a la siguiente pantalla
