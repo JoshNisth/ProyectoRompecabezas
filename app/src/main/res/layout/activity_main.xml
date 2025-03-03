@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="20dp"
-    android:background="#115A83"
+    android:background="#104C6B"
     tools:context=".MainActivity">
 
     <!-- Logo de la App -->
@@ -33,13 +33,14 @@
             android:orientation="vertical"
             android:gravity="center">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/btnClasico"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/icono_clasico"
                 android:contentDescription="Modo Clásico"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:background="@null" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -58,13 +59,14 @@
             android:orientation="vertical"
             android:gravity="center">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/btnPersonalizado"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/icono_personalizado"
                 android:contentDescription="Modo Personalizado"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:background="@null" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -92,13 +94,14 @@
             android:orientation="vertical"
             android:gravity="center">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/btnClasificatoria"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/icono_clasificatoria"
                 android:contentDescription="Modo Clasificatoria"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:background="@null" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -117,13 +120,14 @@
             android:orientation="vertical"
             android:gravity="center">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/btnConfiguraciones"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/icono_configuraciones"
                 android:contentDescription="Configuraciones"
-                android:scaleType="fitCenter" />
+                android:scaleType="fitCenter"
+                android:background="@null" />
 
             <TextView
                 android:layout_width="wrap_content"

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    tools:context=".CrearPuzzleActivity">
+
+    <!-- Imagen seleccionada -->
+    <ImageView
+        android:id="@+id/imagenSeleccionada"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:background="@android:color/darker_gray"
+        android:scaleType="centerCrop"
+        android:contentDescription="Imagen seleccionada"/>
+
+    <!-- Botón para tomar foto -->
+    <Button
+        android:id="@+id/btnTomarFoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tomar Foto"
+        android:layout_marginTop="20dp"/>
+
+    <!-- Botón para elegir imagen de la galería -->
+    <Button
+        android:id="@+id/btnElegirGaleria"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Elegir desde Galería"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Campo para ingresar el nombre del puzzle -->
+    <EditText
+        android:id="@+id/etNombrePuzzle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre del puzzle"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:background="@android:drawable/editbox_background"/>
+
+    <!-- Botón para confirmar -->
+    <Button
+        android:id="@+id/btnConfirmar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Confirmar"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>
