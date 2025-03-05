@@ -36,12 +36,13 @@ public class ArmarPuzzleActivity extends AppCompatActivity {
     private List<ImageView> piezasPuzzle;
     private int[][] posiciones;
     private int filaBlanca = 2, colBlanca = 2; // Última posición en blanco
+    private Button btnResolver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_armar_puzzle);
-
+        btnResolver = findViewById(R.id.btnResolver);
         imagenReferencia = findViewById(R.id.imagenReferencia);
         gridPuzzle = findViewById(R.id.gridPuzzle);
         cronometro = findViewById(R.id.cronometro);
@@ -237,12 +238,8 @@ public class ArmarPuzzleActivity extends AppCompatActivity {
             verificarVictoria();
         }
     }
-
-
-
-
+    
     // Método para verificar si el puzzle está resuelto
-    // Método mejorado para verificar si el puzzle está resuelto
     private void verificarVictoria() {
         boolean resuelto = true;
 
@@ -274,7 +271,10 @@ public class ArmarPuzzleActivity extends AppCompatActivity {
 
         if (resuelto) {
             corriendo = false;
+            handler.removeCallbacksAndMessages(null); // Detener cronómetro
             Toast.makeText(this, "¡Puzzle Completado!", Toast.LENGTH_SHORT).show();
+            btnResolver.setEnabled(false); // Deshabilitar botón
+            btnResolver.setText("Resuelto"); // Cambiar texto del botón
         }
     }
 
@@ -296,8 +296,11 @@ public class ArmarPuzzleActivity extends AppCompatActivity {
         handler.post(actualizarTiempo);
     }
 
-    // Método para resolver automáticamente (A* pendiente)
+    // Método para resolver automáticamente
     private void resolverAutomaticamente() {
+        corriendo = false; // Detener cronómetro
+        handler.removeCallbacksAndMessages(null); // Detener actualizaciones del cronómetro
+
         int[] estadoInicial = new int[9];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -322,11 +325,14 @@ public class ArmarPuzzleActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            runOnUiThread(() ->
-                    Toast.makeText(ArmarPuzzleActivity.this, "¡Puzzle resuelto automáticamente!", Toast.LENGTH_SHORT).show()
-            );
+            runOnUiThread(() -> {
+                Toast.makeText(ArmarPuzzleActivity.this, "¡Puzzle resuelto automáticamente!", Toast.LENGTH_SHORT).show();
+                btnResolver.setEnabled(false); // Deshabilitar botón
+                btnResolver.setText("Resuelto"); // Cambiar texto del botón
+            });
         }).start();
     }
+
     private void actualizarUIConEstado(int[] estado) {
         gridPuzzle.removeAllViews(); // Eliminar las vistas actuales
 
