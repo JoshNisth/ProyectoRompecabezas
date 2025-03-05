@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -21,6 +23,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class ArmarPuzzleActivity extends AppCompatActivity {
 
@@ -70,28 +73,43 @@ public class ArmarPuzzleActivity extends AppCompatActivity {
 
     // Método para cortar la imagen en 9 partes
     private List<ImageView> cortarImagen(Bitmap bitmap) {
-        int ancho = 100; // Cada pieza debe medir 100x100 dp
-        int alto = 100;
+        // Dividimos la imagen en 3 columnas y 3 filas
+        int ancho = bitmap.getWidth() / 3;
+        int alto = bitmap.getHeight() / 3;
+
         List<ImageView> piezas = new ArrayList<>();
         posiciones = new int[3][3];
 
         for (int fila = 0; fila < 3; fila++) {
             for (int col = 0; col < 3; col++) {
+                // Crear un ImageView para esta pieza
                 ImageView piezaView = new ImageView(this);
-                piezaView.setLayoutParams(new GridLayout.LayoutParams());
-                piezaView.setPadding(2, 2, 2, 2); // Márgenes entre piezas
+                piezaView.setPadding(2, 2, 2, 2);
 
+                // Creamos los LayoutParams para que cada pieza llene su celda en el GridLayout
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams(
+                        GridLayout.spec(fila, 1f), // rowSpec
+                        GridLayout.spec(col, 1f)   // columnSpec
+                );
+                // Asignamos ancho y alto 0 para que se repartan con "pesos"
+                params.width = 0;
+                params.height = 0;
+                piezaView.setLayoutParams(params);
+
+                // Si es la última posición (2,2), la dejamos en blanco
                 if (fila == 2 && col == 2) {
                     piezaView.setBackgroundColor(Color.WHITE);
                     posiciones[fila][col] = -1;
                 } else {
+                    // Cortar el pedazo correspondiente del bitmap original
                     int x = col * ancho;
                     int y = fila * alto;
                     Bitmap subImagen = Bitmap.createBitmap(bitmap, x, y, ancho, alto);
                     piezaView.setImageBitmap(subImagen);
-                    posiciones[fila][col] = piezas.size();
+                    posiciones[fila][col] = fila * 3 + col;
                 }
 
+                // Guardar la pieza en la lista y setear OnClick
                 piezaView.setOnClickListener(this::moverPieza);
                 piezas.add(piezaView);
             }
@@ -99,26 +117,36 @@ public class ArmarPuzzleActivity extends AppCompatActivity {
         return piezas;
     }
 
+
     // Mostrar las piezas mezcladas en el GridLayout de manera resoluble
     private void mostrarPiezasMezcladas() {
-        gridPuzzle.removeAllViews();
+        gridPuzzle.removeAllViews(); // Eliminar vistas antiguas
 
-        // Mezclar las piezas (asegurando que sea resoluble)
-        mezclarPiezasResolubles();
+        mezclarPiezasResolubles(); // Mezclar la matriz
 
-        // Actualizar la matriz de posiciones y añadir las piezas al grid
         for (int fila = 0; fila < 3; fila++) {
             for (int col = 0; col < 3; col++) {
-                int pos = fila * 3 + col;
                 int indicePieza = posiciones[fila][col];
+                ImageView pieza;
 
                 if (indicePieza == -1) {
-                    // Actualizar la posición de la pieza en blanco
+                    // Crear una vista en blanco
+                    pieza = new ImageView(this);
+                    pieza.setBackgroundColor(Color.WHITE);
                     filaBlanca = fila;
                     colBlanca = col;
+                } else {
+                    pieza = piezasPuzzle.get(indicePieza);
                 }
 
-                ImageView pieza = piezasPuzzle.get(indicePieza >= 0 ? indicePieza : piezasPuzzle.size() - 1);
+                // Ajustar parámetros y añadir la pieza a la cuadrícula
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams(
+                        GridLayout.spec(fila, 1f),
+                        GridLayout.spec(col, 1f)
+                );
+                params.width = 0;
+                params.height = 0;
+                pieza.setLayoutParams(params);
                 gridPuzzle.addView(pieza);
             }
         }
@@ -126,96 +154,91 @@ public class ArmarPuzzleActivity extends AppCompatActivity {
 
     // Método para asegurar que el rompecabezas sea resoluble
     private void mezclarPiezasResolubles() {
-        // Reiniciar la matriz de posiciones a su estado original
+        Log.d("MEZCLA", "Antes de mezclar:");
+        imprimirMatriz();
+
         for (int i = 0; i < 9; i++) {
             posiciones[i / 3][i % 3] = (i == 8) ? -1 : i;
         }
 
-        // Realizar un número aleatorio de movimientos válidos (100-200)
-        int movimientos = 100 + (int)(Math.random() * 100);
+        int movimientos = 100;
+        Random rand = new Random();
 
         for (int i = 0; i < movimientos; i++) {
-            // Elegir una dirección aleatoria (0: arriba, 1: derecha, 2: abajo, 3: izquierda)
-            int direccion = (int)(Math.random() * 4);
+            int[][] direcciones = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+            int[] direccionElegida = direcciones[rand.nextInt(4)];
+            int nuevaFila = filaBlanca + direccionElegida[0];
+            int nuevaColumna = colBlanca + direccionElegida[1];
 
-            // Calcular nueva posición según la dirección
-            int nuevaFila = filaBlanca;
-            int nuevaCol = colBlanca;
+            if (nuevaFila >= 0 && nuevaFila < 3 && nuevaColumna >= 0 && nuevaColumna < 3) {
+                posiciones[filaBlanca][colBlanca] = posiciones[nuevaFila][nuevaColumna];
+                posiciones[nuevaFila][nuevaColumna] = -1;
 
-            switch (direccion) {
-                case 0: // Arriba
-                    nuevaFila = Math.max(0, filaBlanca - 1);
-                    break;
-                case 1: // Derecha
-                    nuevaCol = Math.min(2, colBlanca + 1);
-                    break;
-                case 2: // Abajo
-                    nuevaFila = Math.min(2, filaBlanca + 1);
-                    break;
-                case 3: // Izquierda
-                    nuevaCol = Math.max(0, colBlanca - 1);
-                    break;
-            }
-
-            // Si la posición cambió, realizar un intercambio válido
-            if (nuevaFila != filaBlanca || nuevaCol != colBlanca) {
-                // Intercambiar valores en la matriz de posiciones
-                int temp = posiciones[nuevaFila][nuevaCol];
-                posiciones[nuevaFila][nuevaCol] = -1;
-                posiciones[filaBlanca][colBlanca] = temp;
-
-                // Actualizar posición en blanco
                 filaBlanca = nuevaFila;
-                colBlanca = nuevaCol;
+                colBlanca = nuevaColumna;
             }
         }
+
+        Log.d("MEZCLA", "Después de mezclar:");
+        imprimirMatriz();
+    }
+
+    private void imprimirMatriz() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                sb.append(posiciones[i][j]).append(" ");
+            }
+            sb.append("\n");
+        }
+        Log.d("MATRIZ", "\n" + sb.toString());
     }
 
     // Método para mover las piezas del rompecabezas
     private void moverPieza(View view) {
-        // Encontrar la posición actual de la pieza seleccionada en el grid
+        // Obtener la posición actual de la pieza seleccionada
         int posicionActual = gridPuzzle.indexOfChild(view);
         int filaActual = posicionActual / 3;
         int colActual = posicionActual % 3;
 
-        // Calcular la posición de la pieza en blanco
-        int posicionBlanca = filaBlanca * 3 + colBlanca;
+        // Verificar si la pieza es adyacente a la pieza vacía
+        boolean esMovible = (filaActual == filaBlanca && Math.abs(colActual - colBlanca) == 1) ||
+                (colActual == colBlanca && Math.abs(filaActual - filaBlanca) == 1);
 
-        // Verificar si la pieza seleccionada es adyacente a la posición en blanco
-        if ((filaActual == filaBlanca && Math.abs(colActual - colBlanca) == 1) ||
-                (colActual == colBlanca && Math.abs(filaActual - filaBlanca) == 1)) {
+        if (esMovible) {
+            // Obtener las vistas de la pieza seleccionada y la pieza vacía
+            ImageView piezaSeleccionada = (ImageView) view;
+            ImageView piezaBlancaView = (ImageView) gridPuzzle.getChildAt(filaBlanca * 3 + colBlanca);
 
-            // Obtener las vistas de la pieza seleccionada y la pieza en blanco
-            View piezaSeleccionada = gridPuzzle.getChildAt(posicionActual);
-            View piezaBlanca = gridPuzzle.getChildAt(posicionBlanca);
+            // Intercambiar imágenes
+            Drawable tempImagen = piezaSeleccionada.getDrawable();
+            piezaSeleccionada.setImageDrawable(null);
+            piezaSeleccionada.setBackgroundColor(Color.WHITE);
+            // Quitar el listener de la vista que ahora es blanca
+            piezaSeleccionada.setOnClickListener(null);
 
-            // Eliminar ambas piezas del grid
-            gridPuzzle.removeView(piezaSeleccionada);
-            gridPuzzle.removeView(piezaBlanca);
+            piezaBlancaView.setImageDrawable(tempImagen);
+            // Asignar el listener a la vista que ahora tiene la imagen para que pueda moverse en futuros toques
+            piezaBlancaView.setOnClickListener(this::moverPieza);
 
-            // Volver a añadir las piezas en las posiciones intercambiadas
-            // (Importante: el orden de añadir es crucial si las posiciones son consecutivas)
-            if (posicionActual < posicionBlanca) {
-                gridPuzzle.addView(piezaBlanca, posicionActual);
-                gridPuzzle.addView(piezaSeleccionada, posicionBlanca);
-            } else {
-                gridPuzzle.addView(piezaSeleccionada, posicionBlanca);
-                gridPuzzle.addView(piezaBlanca, posicionActual);
-            }
+            // Intercambiar valores en la matriz de posiciones
+            int tempValor = posiciones[filaActual][colActual];
+            posiciones[filaActual][colActual] = posiciones[filaBlanca][colBlanca];
+            posiciones[filaBlanca][colBlanca] = tempValor;
 
-            // Actualizar la matriz de posiciones para el seguimiento lógico
-            int valorTemporal = posiciones[filaActual][colActual];
-            posiciones[filaActual][colActual] = posiciones[filaBlanca][colBlanca]; // -1
-            posiciones[filaBlanca][colBlanca] = valorTemporal;
-
-            // Actualizar la posición en blanco
+            // Actualizar la posición de la pieza vacía
             filaBlanca = filaActual;
             colBlanca = colActual;
 
-            // Verificar si el puzzle se ha completado
+            gridPuzzle.invalidate();
+            gridPuzzle.requestLayout();
+
+            // Verificar si el puzzle está resuelto
             verificarVictoria();
         }
     }
+
+
 
 
     // Método para verificar si el puzzle está resuelto

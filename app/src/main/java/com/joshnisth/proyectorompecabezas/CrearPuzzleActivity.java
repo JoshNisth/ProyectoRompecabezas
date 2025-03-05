@@ -17,6 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -111,11 +113,18 @@ public class CrearPuzzleActivity extends AppCompatActivity {
 
     // Método para guardar la imagen redimensionada en un archivo temporal y obtener su URI
     private Uri guardarImagenTemporal(Bitmap bitmap) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, "imagen_puzzle", null);
-        return Uri.parse(path);
+        try {
+            File archivoTemporal = new File(getCacheDir(), "imagen_puzzle.png");
+            FileOutputStream fos = new FileOutputStream(archivoTemporal);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+            return Uri.fromFile(archivoTemporal);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
+
 
     // Método para confirmar y pasar a la siguiente pantalla
     private void confirmarPuzzle() {
