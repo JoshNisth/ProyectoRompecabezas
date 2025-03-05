@@ -298,8 +298,70 @@ public class ArmarPuzzleActivity extends AppCompatActivity {
 
     // Método para resolver automáticamente (A* pendiente)
     private void resolverAutomaticamente() {
-        // Implementar el algoritmo A*
+        int[] estadoInicial = new int[9];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                estadoInicial[i * 3 + j] = posiciones[i][j];
+            }
+        }
+
+        new Thread(() -> {
+            PuzzleSolver solver = new PuzzleSolver();
+            List<int[]> solucion = solver.solve(estadoInicial);
+            if (solucion == null) {
+                runOnUiThread(() ->
+                        Toast.makeText(ArmarPuzzleActivity.this, "No se encontró solución", Toast.LENGTH_SHORT).show()
+                );
+                return;
+            }
+            for (int[] estado : solucion) {
+                runOnUiThread(() -> actualizarUIConEstado(estado));
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            runOnUiThread(() ->
+                    Toast.makeText(ArmarPuzzleActivity.this, "¡Puzzle resuelto automáticamente!", Toast.LENGTH_SHORT).show()
+            );
+        }).start();
     }
+    private void actualizarUIConEstado(int[] estado) {
+        gridPuzzle.removeAllViews(); // Eliminar las vistas actuales
+
+        for (int fila = 0; fila < 3; fila++) {
+            for (int col = 0; col < 3; col++) {
+                int indice = fila * 3 + col;
+                ImageView pieza;
+
+                if (estado[indice] == -1) {
+                    // Crear una vista en blanco
+                    pieza = new ImageView(this);
+                    pieza.setBackgroundColor(Color.WHITE);
+                    filaBlanca = fila;
+                    colBlanca = col;
+                } else {
+                    pieza = piezasPuzzle.get(estado[indice]);
+                }
+
+                // Ajustar los parámetros y añadir la pieza a la cuadrícula
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams(
+                        GridLayout.spec(fila, 1f),
+                        GridLayout.spec(col, 1f)
+                );
+                params.width = 0;
+                params.height = 0;
+                pieza.setLayoutParams(params);
+                gridPuzzle.addView(pieza);
+            }
+        }
+
+        // Forzar actualización de la UI
+        gridPuzzle.invalidate();
+        gridPuzzle.requestLayout();
+    }
+
 
     @Override
     protected void onDestroy() {
