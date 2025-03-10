@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.joshnisth.proyectorompecabezas.ui.FinJuegoFragment;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -232,9 +234,12 @@ public class ArmarPuzzleActivity extends AppCompatActivity {
         if (resuelto) {
             corriendo = false;
             handler.removeCallbacksAndMessages(null); // Detener cronómetro
-            Toast.makeText(this, "¡Puzzle Completado!", Toast.LENGTH_SHORT).show();
-            btnResolver.setEnabled(false);
-            btnResolver.setText("Resuelto");
+
+            boolean esAutomatico = btnResolver.isEnabled(); // Si el botón aún está activo, se resolvió manualmente
+            String tiempoFinal = cronometro.getText().toString();
+
+            FinJuegoFragment dialog = FinJuegoFragment.newInstance(tiempoFinal, !esAutomatico);
+            dialog.show(getSupportFragmentManager(), "FinJuegoFragment");
         }
     }
 
@@ -298,10 +303,12 @@ public class ArmarPuzzleActivity extends AppCompatActivity {
 
             // Al terminar, mostrar mensaje
             runOnUiThread(() -> {
-
-                Toast.makeText(ArmarPuzzleActivity.this, "¡Puzzle resuelto automáticamente!", Toast.LENGTH_SHORT).show();
                 btnResolver.setEnabled(false);
                 btnResolver.setText("Resuelto");
+                runOnUiThread(() -> {
+                    FinJuegoFragment dialog = FinJuegoFragment.newInstance("00:00", true);
+                    dialog.show(getSupportFragmentManager(), "FinJuegoFragment");
+                });
             });
         }).start();
     }
