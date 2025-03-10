@@ -3,21 +3,21 @@ package com.joshnisth.proyectorompecabezas.data.models;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "jugador")
-public class Jugador {
+@Entity(tableName = "rompecabezas")
+public class Rompecabezas {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String nombre;
-    private int tiempo; // en segundos
+    private String rutaImagen; // Guardamos solo la ruta de la imagen
 
-    public Jugador(String nombre, int tiempo) {
+    public Rompecabezas(String nombre, String rutaImagen) {
         this.nombre = nombre;
-        this.tiempo = tiempo;
+        this.rutaImagen = rutaImagen;
     }
 
     public int getId() { return id; }
     public String getNombre() { return nombre; }
-    public int getTiempo() { return tiempo; }
+    public String getRutaImagen() { return rutaImagen; }
 
     public void setId(int id) { this.id = id; }
 }
