@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    android:background="#104C6B">
+
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="261dp"
+        android:layout_height="195dp"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/logo_app" />
+
+    <!-- Primera fila de botones: Clásico y Personalizado -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="20dp">
+
+        <!-- Botón Clásico -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btnClasico"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/icono_clasico"
+                android:contentDescription="Modo Clásico"
+                android:scaleType="fitCenter"
+                android:background="@null" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clásico"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:layout_marginTop="5dp" />
+        </LinearLayout>
+
+        <!-- Botón Personalizado -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btnPersonalizado"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/icono_personalizado"
+                android:contentDescription="Modo Personalizado"
+                android:scaleType="fitCenter"
+                android:background="@null" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Personalizado"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:layout_marginTop="5dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Segunda fila de botones: Clasificatoria y Configuraciones -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="30dp">
+
+        <!-- Botón Clasificatoria -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btnClasificatoria"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/icono_clasificatoria"
+                android:contentDescription="Modo Clasificatoria"
+                android:scaleType="fitCenter"
+                android:background="@null" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clasificatoria"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:layout_marginTop="5dp" />
+        </LinearLayout>
+
+        <!-- Botón Configuraciones -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/btnConfiguraciones"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/icono_configuraciones"
+                android:contentDescription="Configuraciones"
+                android:scaleType="fitCenter"
+                android:background="@null" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Configuraciones"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:layout_marginTop="5dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Botón Salir -->
+    <Button
+        android:id="@+id/btnSalir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Salir"
+        android:padding="10dp"
+        android:backgroundTint="@android:color/holo_red_light"/>
+</LinearLayout>

@@ -1,9 +1,10 @@
 package com.joshnisth.proyectorompecabezas;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import com.joshnisth.proyectorompecabezas.ui.MenuFragment;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -11,11 +12,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Configuración del botón personalizado
-        ImageButton btnPersonalizado = findViewById(R.id.btnPersonalizado);
-        btnPersonalizado.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, CrearPuzzleActivity.class);
-            startActivity(intent);
-        });
+        // Cargar el menú al iniciar la app
+        if (savedInstanceState == null) {
+            cargarFragment(new MenuFragment());
+        }
+    }
+
+    public void cargarFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
