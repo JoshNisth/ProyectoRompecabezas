@@ -1,60 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2753B6"
-    android:gravity="center"
-    android:orientation="vertical"
-    android:padding="20dp">
+    android:fillViewport="true"
+    android:background="#2753B6">
 
-    <!-- Nombre del puzzle -->
-    <TextView
-        android:id="@+id/tvNombrePuzzle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nombre del Puzzle"
-        android:textSize="20sp"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:layout_marginBottom="10dp" />
-
-    <!-- Cronómetro -->
-    <TextView
-        android:id="@+id/cronometro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="00:00"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:layout_marginBottom="10dp" />
-
-    <!-- Imagen de referencia (300dp × 300dp) -->
-    <ImageView
-        android:id="@+id/imagenReferencia"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:scaleType="fitXY"
-        android:layout_marginBottom="20dp" />
-
-    <!-- Tablero del rompecabezas (300dp × 300dp) -->
-    <GridLayout
-        android:id="@+id/gridPuzzle"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:columnCount="3"
-        android:rowCount="3"
-        android:background="@android:color/darker_gray"
-        android:padding="2dp"
-        android:layout_marginBottom="20dp" />
-
-    <!-- Botón para resolver automáticamente -->
-    <Button
-        android:id="@+id/btnResolver"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="RESOLVER AUTOMÁTICAMENTE"
-        android:backgroundTint="#CE7EE5"
-        android:textColor="@android:color/black" />
-</LinearLayout>
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Cronómetro -->
+        <TextView
+            android:id="@+id/cronometro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- Imagen de referencia -->
+        <ImageView
+            android:id="@+id/imagenReferencia"
+            android:layout_width="179dp"
+            android:layout_height="172dp"
+            android:layout_marginBottom="18dp"
+            android:scaleType="fitXY" />
+
+        <!-- Tablero del rompecabezas -->
+        <GridLayout
+            android:id="@+id/gridPuzzle"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:columnCount="3"
+            android:rowCount="3"
+            android:background="@android:color/darker_gray"
+            android:padding="3dp"
+            android:layout_marginBottom="18dp"/>
+
+        <!-- Botón para resolver automáticamente -->
+        <Button
+            android:id="@+id/btnResolver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="RESOLVER AUTOMÁTICAMENTE"
+            android:backgroundTint="#CE7EE5"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="10dp"
+            android:minHeight="50dp"
+            android:textSize="18sp"/>
+    </LinearLayout>
+</ScrollView>
