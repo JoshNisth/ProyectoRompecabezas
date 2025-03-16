@@ -82,16 +82,23 @@ public class FinJuegoFragment extends DialogFragment {
             } else {
                 puntuacionRepository.insertarJugador(new Jugador(nombre, convertirTiempoASegundos(tiempo)));
                 Toast.makeText(getContext(), "Guardado en el ranking", Toast.LENGTH_SHORT).show();
-                dismiss();
+                cerrarYVolverAlMenu();
             }
         });
 
         btnSalir.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), MainActivity.class);
-            startActivity(intent);
-            getActivity().finish();
+            cerrarYVolverAlMenu();
         });
+
+        setCancelable(false); // No permite cerrar el diálogo con "Back" o tocando fuera
     }
+
+    private void cerrarYVolverAlMenu() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+    }
+
 
     private int convertirTiempoASegundos(String tiempo) {
         String[] partes = tiempo.split(":");

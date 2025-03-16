@@ -10,11 +10,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioGroup;
-import android.widget.Toast;
+import android.widget.*;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -42,12 +38,15 @@ public class CrearPuzzleFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_crear_puzzle, container, false);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         imagenSeleccionada = view.findViewById(R.id.imagenSeleccionada);
@@ -132,7 +131,17 @@ public class CrearPuzzleFragment extends Fragment {
             return;
         }
 
+        // Cargar el fragmento de armado de puzzle
         ArmarPuzzleFragment fragment = ArmarPuzzleFragment.newInstance(imagenUri.toString(), tamañoSeleccionado, nombrePuzzle);
         ((MainActivity) requireActivity()).cargarFragment(fragment);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        imagenUri = null;
+        imagenSeleccionada.setImageDrawable(null);
+        etNombrePuzzle.setText("");
+        radioGroupTamaño.check(R.id.radio3x3);
     }
 }

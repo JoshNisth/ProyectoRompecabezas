@@ -125,32 +125,42 @@ public class ArmarPuzzleFragment extends Fragment {
         iniciarCronometro();
 
         btnResolver.setOnClickListener(v -> {
-            btnResolver.setEnabled(false);
+            btnResolver.setEnabled(false); // Bloquear botón tras presionarlo
             corriendo = false;
             handler.removeCallbacksAndMessages(null);
 
+            // Bloquear interacción con el puzzle
+            for (int i = 0; i < gridPuzzle.getChildCount(); i++) {
+                gridPuzzle.getChildAt(i).setOnClickListener(null);
+            }
+
             new Thread(() -> {
                 PuzzleSolver solver = new PuzzleSolver();
-                // asume 'posiciones' es tu estado actual, 'meta' tu estado final, 'tamaño' 3 o 4
                 List<int[][]> solucion = solver.solve(posiciones, meta, tamaño);
+
                 if (solucion == null) {
                     requireActivity().runOnUiThread(() ->
                             Toast.makeText(getContext(), "No se encontró solución", Toast.LENGTH_SHORT).show()
                     );
                     return;
                 }
-                // Reproducir pasos
+
+                // Reproducir pasos de la solución
                 for (int[][] estado : solucion) {
                     requireActivity().runOnUiThread(() -> actualizarUIConEstado(estado));
-                    try { Thread.sleep(500); } catch (InterruptedException e) {}
+                    try { Thread.sleep(500); } catch (InterruptedException e) { e.printStackTrace(); }
                 }
-                // Al terminar, mostrar FinJuegoFragment
+
+                // Mostrar FinJuegoFragment bloqueado hasta que el usuario seleccione una opción
                 requireActivity().runOnUiThread(() -> {
                     FinJuegoFragment dialog = FinJuegoFragment.newInstance("00:00", true);
+                    dialog.setCancelable(false); // Bloquear el cierre manual del diálogo
                     dialog.show(getParentFragmentManager(), "FinJuegoFragment");
                 });
+
             }).start();
         });
+
 
 
     }
