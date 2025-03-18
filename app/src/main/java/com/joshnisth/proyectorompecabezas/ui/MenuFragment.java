@@ -40,7 +40,7 @@ public class MenuFragment extends Fragment {
         });
 
         btnClasificatoria.setOnClickListener(v -> {
-            // Aquí puedes cargar el fragmento de modo clasificatoria si lo necesitas
+            ((MainActivity) requireActivity()).cargarFragment(new RankingFragment());
         });
 
         btnConfiguraciones.setOnClickListener(v -> {

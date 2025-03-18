@@ -26,6 +26,17 @@ public class PuntuacionRepository {
     public List<Jugador> obtenerMejoresTiemposPorTamano(int tamano) {
         return db.jugadorDao().obtenerMejoresTiemposPorTamano(tamano);
     }
+    // Consulta ASÍNCRONA con callback
+    public void obtenerMejoresTiemposPorTamanoAsync(int tamano, OnJugadoresResult callback) {
+        executorService.execute(() -> {
+            List<Jugador> jugadores = db.jugadorDao().obtenerMejoresTiemposPorTamano(tamano);
+            // Devolvemos el resultado por callback
+            callback.onResult(jugadores);
+        });
+    }
+    public void eliminarRanking() {
+        executorService.execute(() -> db.jugadorDao().eliminarTodos());
+    }
 
     // ✅ **Guardar un nuevo rompecabezas personalizado**
     public void insertarRompecabezas(Rompecabezas rompecabezas) {
@@ -36,4 +47,8 @@ public class PuntuacionRepository {
     public List<Rompecabezas> obtenerRompecabezas() {
         return db.rompecabezasDao().obtenerTodos();
     }
+    public interface OnJugadoresResult {
+        void onResult(List<Jugador> jugadores);
+    }
+
 }

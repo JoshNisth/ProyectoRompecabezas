@@ -14,4 +14,7 @@ public interface JugadorDao {
     // Obtener mejores tiempos por tamaño
     @Query("SELECT * FROM jugador WHERE tamano = :tamano ORDER BY tiempo ASC LIMIT 10")
     List<Jugador> obtenerMejoresTiemposPorTamano(int tamano);
+    @Query("DELETE FROM jugador")
+    void eliminarTodos();
+
 }

@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase;
 import com.joshnisth.proyectorompecabezas.data.models.Jugador;
 import com.joshnisth.proyectorompecabezas.data.models.Rompecabezas;
 
-@Database(entities = {Jugador.class, Rompecabezas.class}, version = 1)
+@Database(entities = {Jugador.class, Rompecabezas.class}, version = 2)
 public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase INSTANCE;
 
@@ -22,7 +22,8 @@ public abstract class AppDatabase extends RoomDatabase {
                             context.getApplicationContext(),
                             AppDatabase.class,
                             "rompecabezas_db"
-                    ).build();
+                    ).fallbackToDestructiveMigration() // 🔴 Esto BORRA Y RECREA la base si hay cambios en el esquema
+                            .build();
                 }
             }
         }
