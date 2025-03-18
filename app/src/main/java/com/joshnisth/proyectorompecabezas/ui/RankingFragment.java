@@ -78,24 +78,21 @@ public class RankingFragment extends Fragment {
      */
     private void cargarRanking(int tamano) {
         tvTitulo.setText("🏆 Ranking " + tamano + "x" + tamano + " 🏆");
-
-        // ✅ Usamos el método asíncrono para no bloquear el hilo principal
+        // Usar método asíncrono
         puntuacionRepository.obtenerMejoresTiemposPorTamanoAsync(tamano, jugadores -> {
             requireActivity().runOnUiThread(() -> {
                 if (jugadores.isEmpty()) {
-                    mostrarMensajeSinRegistros();
-                    return;
+                    // Lista vacía => un adapter con "No hay registros" o un text
+                    listRanking.setAdapter(null);
+                    Toast.makeText(getContext(), "No hay registros", Toast.LENGTH_SHORT).show();
+                } else {
+                    RankingAdapter adapter = new RankingAdapter(requireContext(), jugadores);
+                    listRanking.setAdapter(adapter);
                 }
-
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1);
-                int posicion = 1;
-                for (Jugador jugador : jugadores) {
-                    adapter.add(posicion++ + ". " + jugador.getNombre() + " - " + formatearTiempo(jugador.getTiempo()));
-                }
-                listRanking.setAdapter(adapter);
             });
         });
     }
+
 
 
     /**

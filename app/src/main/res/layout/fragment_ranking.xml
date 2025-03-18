@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="#3498DB"
+    android:background="#104C6B"
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -44,19 +45,15 @@
             android:textColor="@android:color/black"/>
     </LinearLayout>
 
-    <!-- Ranking estilo tabla -->
-    <ScrollView
+    <!-- ListView para el ranking -->
+    <ListView
+        android:id="@+id/listRanking"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <ListView
-            android:id="@+id/listRanking"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="#FFFFFF"
-            android:dividerHeight="1dp"/>
-    </ScrollView>
+        android:layout_weight="1"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:padding="8dp" />
 
     <!-- Botones de acción -->
     <LinearLayout
@@ -73,7 +70,8 @@
             android:layout_height="wrap_content"
             android:text="Reiniciar"
             android:backgroundTint="@android:color/holo_red_light"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/white"
+            android:padding="12dp"/>
 
         <Button
             android:id="@+id/btnVolverMenu"
@@ -83,6 +81,7 @@
             android:text="Volver"
             android:backgroundTint="@android:color/holo_green_light"
             android:textColor="@android:color/white"
+            android:padding="12dp"
             android:layout_marginStart="8dp"/>
     </LinearLayout>
 

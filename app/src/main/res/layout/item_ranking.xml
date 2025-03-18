@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:gravity="center_vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/bg_ranking_item">
+
+    <!-- Posición -->
+    <TextView
+        android:id="@+id/tvPosicion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:paddingEnd="16dp"/>
+
+    <!-- Nombre -->
+    <TextView
+        android:id="@+id/tvNombre"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="Jugador"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"/>
+
+    <!-- Puntaje/Tiempo -->
+    <TextView
+        android:id="@+id/tvTiempo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:50"
+        android:textSize="18sp"
+        android:textColor="#F1C40F"/>
+</LinearLayout>
