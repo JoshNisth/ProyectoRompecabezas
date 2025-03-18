@@ -24,16 +24,20 @@ public class FinJuegoFragment extends DialogFragment {
 
     private static final String ARG_TIEMPO = "tiempo";
     private static final String ARG_AUTOMATICO = "automatico";
+    private static final String ARG_TAMANO = "tamano";
 
     private String tiempo;
     private boolean esAutomatico;
+    private int tamano; // Tamaño del puzzle (3 o 4)
+
     private PuntuacionRepository puntuacionRepository;
 
-    public static FinJuegoFragment newInstance(String tiempo, boolean esAutomatico) {
+    public static FinJuegoFragment newInstance(String tiempo, boolean esAutomatico, int tamano) {
         FinJuegoFragment fragment = new FinJuegoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_TIEMPO, tiempo);
         args.putBoolean(ARG_AUTOMATICO, esAutomatico);
+        args.putInt(ARG_TAMANO, tamano);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,13 +64,16 @@ public class FinJuegoFragment extends DialogFragment {
         Button btnGuardar = view.findViewById(R.id.btnGuardar);
         Button btnSalir = view.findViewById(R.id.btnSalir);
 
+        // Obtener argumentos
         if (getArguments() != null) {
             tiempo = getArguments().getString(ARG_TIEMPO);
             esAutomatico = getArguments().getBoolean(ARG_AUTOMATICO);
+            tamano = getArguments().getInt(ARG_TAMANO, 3); // Default a 3
         }
 
+        // Configuración del mensaje según sea automático o manual
         if (esAutomatico) {
-            tvMensaje.setText("El puzzle se resolvió automáticamente. Resuelvelo manualmente para poder registrar tu tiempo.");
+            tvMensaje.setText("El puzzle se resolvió automáticamente. Resuélvelo manualmente para registrar tu tiempo.");
             tvTiempo.setVisibility(View.GONE);
             etNombre.setVisibility(View.GONE);
             btnGuardar.setVisibility(View.GONE);
@@ -80,15 +87,14 @@ public class FinJuegoFragment extends DialogFragment {
             if (nombre.isEmpty()) {
                 Toast.makeText(getContext(), "Ingresa tu nombre", Toast.LENGTH_SHORT).show();
             } else {
-                puntuacionRepository.insertarJugador(new Jugador(nombre, convertirTiempoASegundos(tiempo)));
+                // Guardar en la base de datos incluyendo el tamaño del puzzle
+                puntuacionRepository.insertarJugador(new Jugador(nombre, convertirTiempoASegundos(tiempo), tamano));
                 Toast.makeText(getContext(), "Guardado en el ranking", Toast.LENGTH_SHORT).show();
                 cerrarYVolverAlMenu();
             }
         });
 
-        btnSalir.setOnClickListener(v -> {
-            cerrarYVolverAlMenu();
-        });
+        btnSalir.setOnClickListener(v -> cerrarYVolverAlMenu());
 
         setCancelable(false); // No permite cerrar el diálogo con "Back" o tocando fuera
     }
@@ -96,9 +102,8 @@ public class FinJuegoFragment extends DialogFragment {
     private void cerrarYVolverAlMenu() {
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
-        getActivity().finish();
+        requireActivity().finish(); // Finaliza la actividad actual
     }
-
 
     private int convertirTiempoASegundos(String tiempo) {
         String[] partes = tiempo.split(":");

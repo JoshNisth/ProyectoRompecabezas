@@ -153,7 +153,7 @@ public class ArmarPuzzleFragment extends Fragment {
 
                 // Mostrar FinJuegoFragment bloqueado hasta que el usuario seleccione una opción
                 requireActivity().runOnUiThread(() -> {
-                    FinJuegoFragment dialog = FinJuegoFragment.newInstance("00:00", true);
+                    FinJuegoFragment dialog = FinJuegoFragment.newInstance("00:00", true, tamaño);
                     dialog.setCancelable(false); // Bloquear el cierre manual del diálogo
                     dialog.show(getParentFragmentManager(), "FinJuegoFragment");
                 });
@@ -304,7 +304,7 @@ public class ArmarPuzzleFragment extends Fragment {
             // Llamar al FinJuegoFragment
             String tiempoFinal = cronometro.getText().toString();
             boolean esAutomatico = false;
-            FinJuegoFragment dialog = FinJuegoFragment.newInstance(tiempoFinal, esAutomatico);
+            FinJuegoFragment dialog = FinJuegoFragment.newInstance(tiempoFinal, esAutomatico, tamaño);
             dialog.show(getParentFragmentManager(), "FinJuegoFragment");
         }
     }

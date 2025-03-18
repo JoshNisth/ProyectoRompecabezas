@@ -16,20 +16,23 @@ public class PuntuacionRepository {
         db = AppDatabase.getInstance(context);
     }
 
-    // Métodos para Jugador
+    // ✅ **Guardar jugador con su tamaño de puzzle**
     public void insertarJugador(Jugador jugador) {
         executorService.execute(() -> db.jugadorDao().insertar(jugador));
     }
 
-    public List<Jugador> obtenerMejoresTiempos() {
-        return db.jugadorDao().obtenerMejoresTiempos();
+
+    // ✅ **Obtener ranking filtrado por tamaño (3x3 o 4x4)**
+    public List<Jugador> obtenerMejoresTiemposPorTamano(int tamano) {
+        return db.jugadorDao().obtenerMejoresTiemposPorTamano(tamano);
     }
 
-    // Métodos para Rompecabezas
+    // ✅ **Guardar un nuevo rompecabezas personalizado**
     public void insertarRompecabezas(Rompecabezas rompecabezas) {
         executorService.execute(() -> db.rompecabezasDao().insertar(rompecabezas));
     }
 
+    // ✅ **Obtener todos los rompecabezas guardados**
     public List<Rompecabezas> obtenerRompecabezas() {
         return db.rompecabezasDao().obtenerTodos();
     }
