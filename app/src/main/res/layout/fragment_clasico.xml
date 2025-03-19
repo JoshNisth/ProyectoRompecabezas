@@ -22,27 +22,25 @@
     <!-- RadioGroup para 3x3 o 4x4 -->
     <RadioGroup
         android:id="@+id/rgTamano"
-        android:layout_width="wrap_content"
+        android:layout_width="156dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:background="@drawable/bg_radio_group"
         android:gravity="center"
-        android:layout_marginBottom="16dp">
+        android:orientation="horizontal">
 
         <RadioButton
             android:id="@+id/radio3x3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3x3"
             android:checked="true"
-            android:textColor="@android:color/white" />
+            android:text="3x3" />
 
         <RadioButton
             android:id="@+id/radio4x4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4x4"
-            android:layout_marginStart="20dp"
-            android:textColor="@android:color/white" />
+            android:layout_marginStart="10dp"
+            android:text="4x4" />
     </RadioGroup>
 
     <!-- ListView con items (rompecabezas) -->

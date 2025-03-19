@@ -1,6 +1,7 @@
 package com.joshnisth.proyectorompecabezas.ui;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,10 +65,20 @@ public class RankingFragment extends Fragment {
 
         // Reiniciar el ranking completo
         btnResetRanking.setOnClickListener(v -> {
-            puntuacionRepository.eliminarRanking();
-            cargarRanking(tamanoSeleccionado);
-            Toast.makeText(getContext(), "Ranking reiniciado exitosamente", Toast.LENGTH_SHORT).show();
+            // Crear un diálogo de confirmación
+            new AlertDialog.Builder(requireContext())
+                    .setTitle("Reiniciar Ranking")
+                    .setMessage("¿Estás seguro de eliminar todos los datos del ranking?")
+                    .setPositiveButton("Sí", (dialog, which) -> {
+                        // Si el usuario confirma, entonces borramos:
+                        puntuacionRepository.eliminarRanking();
+                        cargarRanking(tamanoSeleccionado);
+                        Toast.makeText(getContext(), "Ranking reiniciado exitosamente", Toast.LENGTH_SHORT).show();
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
         });
+
     }
 
     /**

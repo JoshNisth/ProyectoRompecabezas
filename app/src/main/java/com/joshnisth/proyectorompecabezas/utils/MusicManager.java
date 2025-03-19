@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class MusicManager {
     private static MediaPlayer mediaPlayer = null;
-    private static boolean isMusicOn = false; // Indica si la música está activa
+    private static boolean isMusicOn = true; // Indica si la música está activa
     private static int[] canciones = {
             R.raw.apt,
             R.raw.asitwas,

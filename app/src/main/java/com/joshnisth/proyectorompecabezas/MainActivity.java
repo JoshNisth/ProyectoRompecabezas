@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import com.joshnisth.proyectorompecabezas.ui.MenuFragment;
+import com.joshnisth.proyectorompecabezas.utils.MusicManager;
 
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        // Activar música
+        MusicManager.setMusicOn(true);
+        MusicManager.startMusic(this);
         // Cargar el menú al iniciar la app
         if (savedInstanceState == null) {
             cargarFragment(new MenuFragment());
