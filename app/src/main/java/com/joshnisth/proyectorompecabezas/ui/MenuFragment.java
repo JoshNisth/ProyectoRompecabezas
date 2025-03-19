@@ -44,7 +44,7 @@ public class MenuFragment extends Fragment {
         });
 
         btnConfiguraciones.setOnClickListener(v -> {
-            // Aquí puedes cargar el fragmento de configuraciones si lo necesitas
+            ((MainActivity) requireActivity()).cargarFragment(new SettingsFragment());
         });
 
         btnSalir.setOnClickListener(v -> {

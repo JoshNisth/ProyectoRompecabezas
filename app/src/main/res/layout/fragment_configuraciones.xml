@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="#104C6B">
+
+    <TextView
+        android:id="@+id/tvTituloConfig"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Configuraciones"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"/>
+
+    <Switch
+        android:id="@+id/switchMusica"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Activar Música"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btnCambiarCancion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cambiar Canción"
+        android:backgroundTint="@android:color/holo_orange_light"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="20dp"/>
+    <Button
+        android:id="@+id/btnRegresarMenuSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Volver al menu"
+        android:backgroundTint="@color/purple_200"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="20dp"/>
+
+</LinearLayout>
