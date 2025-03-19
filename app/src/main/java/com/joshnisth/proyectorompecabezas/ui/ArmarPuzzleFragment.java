@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.joshnisth.proyectorompecabezas.MainActivity;
 import com.joshnisth.proyectorompecabezas.R;
 import com.joshnisth.proyectorompecabezas.utils.PuzzleLogic; // Importamos la clase
 import com.joshnisth.proyectorompecabezas.utils.PuzzleSolver;

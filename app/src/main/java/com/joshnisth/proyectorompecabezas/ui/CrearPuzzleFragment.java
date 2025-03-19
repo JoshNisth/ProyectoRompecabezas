@@ -20,6 +20,8 @@ import androidx.fragment.app.Fragment;
 
 import com.joshnisth.proyectorompecabezas.MainActivity;
 import com.joshnisth.proyectorompecabezas.R;
+import com.joshnisth.proyectorompecabezas.data.models.Rompecabezas;
+import com.joshnisth.proyectorompecabezas.data.repositories.PuntuacionRepository;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -131,10 +133,16 @@ public class CrearPuzzleFragment extends Fragment {
             return;
         }
 
-        // Cargar el fragmento de armado de puzzle
+        // === Insertar en BD ===
+        PuntuacionRepository repo = new PuntuacionRepository(requireContext());
+        Rompecabezas nuevoRompecabezas = new Rompecabezas(nombrePuzzle, imagenUri.toString());
+        repo.insertarRompecabezas(nuevoRompecabezas);
+
+        // Ir a armar puzzle
         ArmarPuzzleFragment fragment = ArmarPuzzleFragment.newInstance(imagenUri.toString(), tamañoSeleccionado, nombrePuzzle);
         ((MainActivity) requireActivity()).cargarFragment(fragment);
     }
+
 
     @Override
     public void onDestroyView() {

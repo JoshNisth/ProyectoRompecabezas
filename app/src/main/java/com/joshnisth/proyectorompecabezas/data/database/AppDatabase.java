@@ -22,7 +22,7 @@ public abstract class AppDatabase extends RoomDatabase {
                             context.getApplicationContext(),
                             AppDatabase.class,
                             "rompecabezas_db"
-                    ).fallbackToDestructiveMigration() // 🔴 Esto BORRA Y RECREA la base si hay cambios en el esquema
+                    ).fallbackToDestructiveMigration()
                             .build();
                 }
             }

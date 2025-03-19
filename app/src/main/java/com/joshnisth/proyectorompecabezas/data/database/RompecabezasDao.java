@@ -13,4 +13,7 @@ public interface RompecabezasDao {
 
     @Query("SELECT * FROM rompecabezas")
     List<Rompecabezas> obtenerTodos();
+    @Query("DELETE FROM rompecabezas WHERE id = :id")
+    void eliminarPorId(int id);
+
 }

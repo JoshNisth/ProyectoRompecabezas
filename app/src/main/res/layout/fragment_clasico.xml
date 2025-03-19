@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:background="#104C6B"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Título -->
+    <TextView
+        android:id="@+id/tvClasicoTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clásico – Seleccione un puzzle"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp" />
+
+    <!-- RadioGroup para 3x3 o 4x4 -->
+    <RadioGroup
+        android:id="@+id/rgTamano"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
+
+        <RadioButton
+            android:id="@+id/radio3x3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3x3"
+            android:checked="true"
+            android:textColor="@android:color/white" />
+
+        <RadioButton
+            android:id="@+id/radio4x4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4x4"
+            android:layout_marginStart="20dp"
+            android:textColor="@android:color/white" />
+    </RadioGroup>
+
+    <!-- ListView con items (rompecabezas) -->
+    <ListView
+        android:id="@+id/listClasico"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp"
+        android:padding="8dp"/>
+
+    <!-- Botón para volver al menú -->
+    <Button
+        android:id="@+id/btnVolverMenuClasico"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Volver al menú"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="12dp"/>
+</LinearLayout>

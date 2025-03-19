@@ -36,7 +36,7 @@ public class MenuFragment extends Fragment {
         });
 
         btnClasico.setOnClickListener(v -> {
-            // Aquí puedes cargar el fragmento de modo clásico si lo necesitas
+            ((MainActivity) requireActivity()).cargarFragment(new ClasicoFragment());
         });
 
         btnClasificatoria.setOnClickListener(v -> {
