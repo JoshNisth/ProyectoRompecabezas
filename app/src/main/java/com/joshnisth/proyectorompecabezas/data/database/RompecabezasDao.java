@@ -15,5 +15,7 @@ public interface RompecabezasDao {
     List<Rompecabezas> obtenerTodos();
     @Query("DELETE FROM rompecabezas WHERE id = :id")
     void eliminarPorId(int id);
+    @Query("UPDATE rompecabezas SET nombre = :nuevoNombre WHERE id = :id")
+    void renombrar(int id, String nuevoNombre);
 
 }

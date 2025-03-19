@@ -58,6 +58,9 @@ public class PuntuacionRepository {
     public void eliminarRompecabezas(Rompecabezas r) {
         executorService.execute(() -> db.rompecabezasDao().eliminarPorId(r.getId()));
     }
+    public void renombrarRompecabezas(Rompecabezas r, String nuevoNombre) {
+        executorService.execute(() -> db.rompecabezasDao().renombrar(r.getId(), nuevoNombre));
+    }
 
     // Interfaz callback para Rompecabezas
     public interface OnRompecabezasResult {

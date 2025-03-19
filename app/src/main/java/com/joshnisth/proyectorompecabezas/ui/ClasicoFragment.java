@@ -63,7 +63,23 @@ public class ClasicoFragment extends Fragment {
         // Al hacer click largo: confirmar eliminación
         listClásico.setOnItemLongClickListener((parent, view12, position, id) -> {
             Rompecabezas seleccionado = (Rompecabezas) parent.getItemAtPosition(position);
-            mostrarDialogoEliminar(seleccionado);
+
+            // Opciones "Renombrar" y "Eliminar"
+            CharSequence[] opciones = {"Renombrar", "Eliminar"};
+
+            new AlertDialog.Builder(requireContext())
+                    .setTitle("Opciones")
+                    .setItems(opciones, (dialog, which) -> {
+                        if (which == 0) {
+                            // Renombrar
+                            mostrarDialogoRenombrar(seleccionado);
+                        } else if (which == 1) {
+                            // Eliminar
+                            mostrarDialogoEliminar(seleccionado);
+                        }
+                    })
+                    .show();
+
             return true; // indica que manejamos el evento
         });
 
@@ -71,6 +87,23 @@ public class ClasicoFragment extends Fragment {
                 ((MainActivity) requireActivity()).cargarFragment(new MenuFragment())
         );
     }
+    private void mostrarDialogoRenombrar(Rompecabezas rompecabezas) {
+        EditText input = new EditText(requireContext());
+        input.setText(rompecabezas.getNombre()); // sugiere nombre actual
+
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Renombrar Rompecabezas")
+                .setView(input)
+                .setPositiveButton("OK", (dialog, which) -> {
+                    String nuevoNombre = input.getText().toString().trim();
+                    if (!nuevoNombre.isEmpty()) {
+                        renombrarRompecabezas(rompecabezas, nuevoNombre);
+                    }
+                })
+                .setNegativeButton("Cancelar", null)
+                .show();
+    }
+
 
     /**
      * Carga todos los rompecabezas asíncronamente
@@ -85,6 +118,11 @@ public class ClasicoFragment extends Fragment {
                 listClásico.setAdapter(adapter);
             });
         });
+    }
+    private void renombrarRompecabezas(Rompecabezas rompecabezas, String nuevoNombre) {
+        repo.renombrarRompecabezas(rompecabezas, nuevoNombre);
+        Toast.makeText(getContext(), "Renombrado a " + nuevoNombre, Toast.LENGTH_SHORT).show();
+        cargarRompecabezas(); // recarga la lista
     }
 
     /**
