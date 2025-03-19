@@ -161,6 +161,10 @@ public class ArmarPuzzleFragment extends Fragment {
 
             }).start();
         });
+        Button btnVolver = view.findViewById(R.id.btnRegresarArmarMenu);
+        btnVolver.setOnClickListener(v -> {
+            ((MainActivity) requireActivity()).cargarFragment(new MenuFragment());
+        });
 
 
 

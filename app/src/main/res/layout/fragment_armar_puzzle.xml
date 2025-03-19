@@ -43,16 +43,38 @@
             android:padding="3dp"
             android:layout_marginBottom="18dp"/>
 
-        <!-- Botón para resolver automáticamente -->
-        <Button
-            android:id="@+id/btnResolver"
+        <!-- LinearLayout horizontal para 2 botones: Resolver y Volver -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RESOLVER AUTOMÁTICAMENTE"
-            android:backgroundTint="#CE7EE5"
-            android:textColor="@android:color/black"
-            android:layout_marginTop="10dp"
-            android:minHeight="50dp"
-            android:textSize="18sp"/>
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+            <!-- Botón Volver -->
+            <Button
+                android:id="@+id/btnRegresarArmarMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Volver"
+                android:backgroundTint="@android:color/holo_green_light"
+                android:textColor="@android:color/white"
+                android:minHeight="50dp"
+                android:textSize="16sp"
+                android:layout_marginEnd="8dp"/>
+            <!-- Botón Resolver -->
+            <Button
+                android:id="@+id/btnResolver"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Resolver"
+                android:backgroundTint="#CE7EE5"
+                android:textColor="@android:color/black"
+                android:minHeight="50dp"
+                android:textSize="16sp"
+                />
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -61,6 +61,10 @@ public class CrearPuzzleFragment extends Fragment {
         btnTomarFoto.setOnClickListener(v -> abrirCamara());
         btnElegirGaleria.setOnClickListener(v -> abrirGaleria());
         btnConfirmar.setOnClickListener(v -> confirmarPuzzle());
+        Button btnVolver = view.findViewById(R.id.btnRegresarMenu);
+        btnVolver.setOnClickListener(v -> {
+            ((MainActivity) requireActivity()).cargarFragment(new MenuFragment());
+        });
     }
 
     private final ActivityResultLauncher<Intent> cameraLauncher =
