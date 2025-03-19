@@ -108,7 +108,10 @@ public class CrearPuzzleFragment extends Fragment {
 
     private Uri guardarImagenTemporal(Bitmap bitmap) {
         try {
-            File archivoTemporal = new File(requireContext().getCacheDir(), "imagen_puzzle.png");
+            // Generar un nombre único usando la hora actual
+            String uniqueName = "imagen_puzzle_" + System.currentTimeMillis() + ".png";
+
+            File archivoTemporal = new File(requireContext().getCacheDir(), uniqueName);
             FileOutputStream fos = new FileOutputStream(archivoTemporal);
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.close();
@@ -118,6 +121,7 @@ public class CrearPuzzleFragment extends Fragment {
             return null;
         }
     }
+
 
     private void confirmarPuzzle() {
         if (imagenUri == null) {
